@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    
+<style>
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.calculator {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#display {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 18px;
+    text-align: right;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+
+.spec-button{
+    background-color:orange;
+}
+.spec-button:hover{
+    background-color:rgb(255, 219, 187);
+
+}
+</style>
+
+
+ 
+</head>
+<body>
+
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            
+            <button onclick="insert('(')">(</button>
+            <button onclick="insert(')')">)</button>
+            <button class="spec-button" onclick="clearDisplay()">C</button>
+            <button class="spec-button" onclick="deleteLast()">DEL</button>
+            <button onclick="insert('sin(')">sin</button>
+            <button onclick="insert('cos(')">cos</button>
+            <button onclick="insert('tan(')">tan</button>
+            <button onclick="insert('log(')">log</button>
+            <button onclick="insert('sqrt(')">√</button>
+            <button onclick="insert('^')">^</button>
+            <button onclick="insert('pi')">π</button>
+            <button onclick="insert('e')">e</button>
+            <button onclick="insert('7')">7</button>
+            <button onclick="insert('8')">8</button>
+            
+            <button onclick="insert('9')">9</button>
+            <button onclick="insert('/')">/</button>
+            <button onclick="insert('4')">4</button>
+            <button onclick="insert('5')">5</button>
+            <button onclick="insert('6')">6</button>
+            <button onclick="insert('*')">*</button>
+            <button onclick="insert('1')">1</button>
+            <button onclick="insert('2')">2</button>
+            <button onclick="insert('3')">3</button>
+            <button onclick="insert('-')">-</button>
+            <button onclick="insert('0')">0</button>
+            <button onclick="insert('.')">.</button>
+            
+            <button onclick="insert('+')">+</button>
+            
+            <button class="spec-button" onclick="calculate()">=</button>
+        </div>
+    </div>
+    <script >
+
+function insert(value) {
+    let display = document.getElementById('display');
+    display.value += value;
+}
+
+function clearDisplay() {
+    document.getElementById('display').value = '';
+}
+
+function deleteLast() {
+    let display = document.getElementById('display');
+    display.value = display.value.slice(0, -1);
+}
+
+function calculate() {
+    let display = document.getElementById('display');
+    let expression = display.value;
+
+    
+    expression = expression.replace(/pi/g, Math.PI);
+    expression = expression.replace(/e/g, Math.E);
+    expression = expression.replace(/sqrt\(/g, 'Math.sqrt(');
+    expression = expression.replace(/log\(/g, 'Math.log10(');
+    expression = expression.replace(/sin\(/g, 'Math.sin(');
+    expression = expression.replace(/cos\(/g, 'Math.cos(');
+    expression = expression.replace(/tan\(/g, 'Math.tan(');
+    expression = expression.replace(/\^/g, '**');
+
+    try {
+        display.value = eval(expression);
+    } catch (e) {
+        display.value = 'Error';
+    }
+}
+    </script>
+</body>
+</html>
